@@ -1,0 +1,41 @@
+---
+- name: Create users and add them to the sudo group
+  user:
+    name: "{{ item.username }}"
+    role: sudo
+    shell: /bin/bash
+    groups: sudo, ubuntu, adm
+    append: true
+  loop: "{{ sudo_users }}"
+
+- name: Create .ssh directory
+  file:
+    path: /home/{{ item.username }}/.ssh
+    state: directory
+    mode: 0700
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
+  loop: "{{ sudo_users }}"
+
+- name: Get the public key from github
+  uri:
+    url: "https://github.com/{{ item.username }}.keys"
+    method: GET
+    return_content: true
+    dest: /home/{{ item.username }}/.ssh/authorized_keys
+    mode: 0600
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
+  loop: "{{ sudo_users }}"
+  ignore_errors: true
+
+- name: Add sudo_users to sudoers file
+  lineinfile:
+    dest: /etc/sudoers
+    line: "{{ item.username }} ALL=NOPASSWD:ALL"
+    insertafter: #includedir /etc/sudoers.d
+    state: present
+    mode: 0440
+    owner: root
+    group: root
+  loop: "{{ sudo_users }}"

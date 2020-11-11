@@ -1,0 +1,21 @@
+---
+galaxy_info:
+  role_name: create_user
+  author: Oleh Debretseni
+  description: create sudo users for servers
+  company: "TenantCloud LLC"
+
+  license: BSD
+
+  min_ansible_version: 2.4
+
+  platforms:
+    - name: Ubuntu Server
+      versions:
+        - 18.04
+        - 20.04
+
+  galaxy_tags:
+    - ubuntu
+    - server
+    - create_user
