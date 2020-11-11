@@ -33,7 +33,7 @@
   lineinfile:
     dest: /etc/sudoers
     line: "{{ item.username }} ALL=NOPASSWD:ALL"
-    insertafter: #includedir /etc/sudoers.d
+    insertafter: "#includedir /etc/sudoers.d"
     state: present
     mode: 0440
     owner: root
