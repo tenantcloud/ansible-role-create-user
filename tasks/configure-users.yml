@@ -4,7 +4,7 @@
     name: "{{ item.username }}"
     role: sudo
     shell: /bin/bash
-    groups: sudo, ubuntu, adm
+    groups: "{{ user_groups }}"
     append: true
   loop: "{{ sudo_users }}"
 
@@ -29,13 +29,19 @@
   loop: "{{ sudo_users }}"
   ignore_errors: true
 
-- name: Add sudo_users to sudoers file
-  lineinfile:
-    dest: /etc/sudoers
-    line: "{{ item.username }} ALL=NOPASSWD:ALL"
-    insertafter: "#includedir /etc/sudoers.d"
-    state: present
+- name: Touch the users file in sudoers.d directory
+  file:
+    path: "/etc/sudoers.d/{{ item.username }}"
+    state: touch
     mode: 0440
     owner: root
     group: root
+  loop: "{{ sudo_users }}"
+
+- name: Insert/Update "User" configuration block in /etc/sudoers.d
+  blockinfile:
+    path: "/etc/sudoers.d/{{ item.username }}"
+    block: |
+      # User rules for {{ item.username }}
+      {{ item.username }} ALL=NOPASSWD:ALL
   loop: "{{ sudo_users }}"

@@ -17,6 +17,7 @@ Role Variables
 
 ansible_user: "ubuntu"
 sudo_users: "list of users"
+user_groups: "dictionary of groups"
 
 Dependencies
 ------------
@@ -33,6 +34,7 @@ Example Playbook
       - username: "user1"
       - username: "user2"
       - username: "user3"
+    user_groups: [ 'sudo', 'ubuntu', 'adm' ]
   roles:
     - tenantcloud.create_user
 ```
