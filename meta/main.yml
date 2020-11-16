@@ -10,10 +10,15 @@ galaxy_info:
   min_ansible_version: 2.4
 
   platforms:
-    - name: Ubuntu Server
+    - name: Ubuntu
       versions:
-        - 18.04
-        - 20.04
+        - trusty
+        - xenial
+        - bionic
+    - name: Debian
+      versions:
+        - jessie
+        - stretch
 
   galaxy_tags:
     - ubuntu
