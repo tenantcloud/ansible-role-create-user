@@ -1,5 +1,5 @@
 
-![Lint Ansible Roles](https://github.com/tenantcloud/ansible-role-create-user/workflows/Ansible%20Lint/badge.svg?branch-master)
+![Lint Ansible Roles](https://github.com/tenantcloud/ansible-role-create-user/workflows/Lint%20Ansible%20Roles/badge.svg?branch-master)
 
 tenantcloud.create_user
 =========
